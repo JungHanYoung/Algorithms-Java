@@ -59,16 +59,21 @@ public class DoublyLinkedList<T> {
 	public void insert(int index, T item) {
 		Node<T> newNode = new Node<T>(item);
 		Node<T> current = getNode(index);
-		if(current == head)
-			insertHead(item);
-		else if(current == null)
+		if(current == tail)
 			insertTail(item);
+		else if(current == null)
+			insertHead(item);
 		else {
-			// prevNode -- 들어갈 좌표 -- nextNode(current)
-			newNode.prev = current.prev;		// prevNode <-- newNode --> null
-			current.prev.next = newNode;		// prevNode <--> newNode --> null
-			newNode.next = current;				// prevNode <--> newNode --> nextNode(current)
-			current.prev = newNode;				// prevNode <--> newNode <--> nextNode(current)
+			// prevNode(current) -- 들어갈 좌표 -- nextNode
+			newNode.prev = current;
+			current.next.prev = newNode;
+			newNode.next = current.next;
+			current.next = newNode;
+			
+//			newNode.prev = current.prev;		// prevNode <-- newNode --> null
+//			current.prev.next = newNode;		// prevNode <--> newNode --> null
+//			newNode.next = current;				// prevNode <--> newNode --> nextNode(current)
+//			current.prev = newNode;				// prevNode <--> newNode <--> nextNode(current)
 		}
 		size++;
 	}
